@@ -1,0 +1,22 @@
+אתר של חנות ספרים 
+עמוד ראשי מציג ספרים
+לכל ספר יש עמוד
+אפשרות להוסיף ספר לעגלת קניות 
+יש עמוד לעגלת קניות קלאסית
+אפשרות לקנות את הספרים עם הודעה של קניה שבוצעה בהצלחה 
+
+אפשרות גם להתחבר לאתר כלקוח
+אם אתה לקוח עגלת קניות נשמרת
+חיבור לדאטה בייס
+
+ניהול כאדמין נפתחת גישה לעמוד נוסף שבו מוצג הכל עם אפשרות לערוך ספרים
+
+Things to do:
+
+1) Create Book Store webpage
+2) Make one main page
+3) For each book you create new page personal with all the info about the book and option to buy it
+4) Add cart page where you can view and buy the books 
+5) On cart page add option to buy the books or adjust amount of book you want to buy
+6) Add option to the page to sign up as user if you do your cart info will be saved
+7) Add admin user to the page that had one personal page where he can modify all the data
