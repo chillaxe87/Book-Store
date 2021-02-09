@@ -1,0 +1,9 @@
+footer{
+    background: #4c394e;
+    height: 50px;
+    width: 80%;
+    margin: auto;
+    position: fixed;
+    bottom: 0;
+    left: 10%
+}

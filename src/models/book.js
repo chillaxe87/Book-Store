@@ -22,10 +22,10 @@ const bookSchema = new mongoose.Schema(
             required: true,
             trim: true
         },
-        buyer: {
+        owner: [{
             type: mongoose.Schema.Types.ObjectId,
             ref: 'User'
-        },
+        }],
         avatar: {
             type: Buffer
         }

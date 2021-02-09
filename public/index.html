@@ -1,27 +1,121 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Book-Store</title>
-    <link rel="stylesheet" href="./css/styles.css">
+    <link rel="stylesheet" href="./css/header.css">
+    <link rel="stylesheet" href="./css/main.css">
+    <link rel="stylesheet" href="./css/footer.css">
 </head>
+
 <body>
     <header>
         <div class="header-main">
             <div class="header-main__logo">
+                <img src="./img/Logo.png" alt="Book Store" id="main-logo"></img>
             </div>
-            <div class="header-upper__search"></div>
-            <div class="header-main__user"></div>
-            <div class="header-main__cart"></div>
+            <div class="header-upper__search">
+                <input type="text" id="book-search">
+                <button id="search-button">Search</button>
+            </div>
+            <div class="header-main__user">
+                <span id="user">Hello Guest</span>
+                <div>
+                    <button id="user-login">Login</button>
+                    <button id="user-signup">Sign up</button>
+                </div>
+            </div>
+            <div class="header-main__cart">
+                <div class="cart-container" id="cart">
+                    <span>0</span>
+                    <img src="./img/Cart.png" alt="">
+                </div>
+            </div>
         </div>
     </header>
     <main>
-
+        <div class="books-container">
+            <div class="book-container">
+                <div class="book" id="book">
+                    <span class="title">Becoming</span>
+                    <img src="https://powells-covers-2.s3.amazonaws.com/9780593303740.jpg" alt="">
+                    <div class="price"> only 99.99 </div>
+                </div>
+            </div>
+            <div class="book-container">
+                <div class="book" id="book">
+                    <span class="title">Becoming</span>
+                    <img src="https://powells-covers-2.s3.amazonaws.com/9780593303740.jpg" alt="">
+                    <div class="price"> only 99.99 </div>
+                </div>
+            </div>
+            <div class="book-container">
+                <div class="book" id="book">
+                    <span class="title">Becoming</span>
+                    <img src="https://powells-covers-2.s3.amazonaws.com/9780593303740.jpg" alt="">
+                    <div class="price"> only 99.99 </div>
+                </div>
+            </div>
+            <div class="book-container">
+                <div class="book" id="book">
+                    <span class="title">Becoming</span>
+                    <img src="https://powells-covers-2.s3.amazonaws.com/9780593303740.jpg" alt="">
+                    <div class="price"> only 99.99 </div>
+                </div>
+            </div>
+            <div class="book-container">
+                <div class="book" id="book">
+                    <span class="title">Becoming</span>
+                    <img src="https://powells-covers-2.s3.amazonaws.com/9780593303740.jpg" alt="">
+                    <div class="price"> only 99.99 </div>
+                </div>
+            </div>
+            <div class="book-container">
+                <div class="book" id="book">
+                    <span class="title">Becoming</span>
+                    <img src="https://powells-covers-2.s3.amazonaws.com/9780593303740.jpg" alt="">
+                    <div class="price"> only 99.99 </div>
+                </div>
+            </div>
+            <div class="book-container">
+                <div class="book" id="book">
+                    <span class="title">Becoming</span>
+                    <img src="https://powells-covers-2.s3.amazonaws.com/9780593303740.jpg" alt="">
+                    <div class="price"> only 99.99 </div>
+                </div>
+            </div>
+            <div class="book-container">
+                <div class="book" id="book">
+                    <span class="title">Becoming</span>
+                    <img src="https://powells-covers-2.s3.amazonaws.com/9780593303740.jpg" alt="">
+                    <div class="price"> only 99.99 </div>
+                </div>
+            </div>
+            <div class="book-container">
+                <div class="book" id="book">
+                    <span class="title">Becoming</span>
+                    <img src="https://powells-covers-2.s3.amazonaws.com/9780593303740.jpg" alt="">
+                    <div class="price"> only 99.99 </div>
+                </div>
+            </div>
+            <div class="book-container">
+                <div class="book" id="book">
+                    <span class="title">Becoming</span>
+                    <img src="https://powells-covers-2.s3.amazonaws.com/9780593303740.jpg" alt="">
+                    <div class="price"> only 99.99 </div>
+                </div>
+            </div>  
+        </div>
+        <div class="books-page">page 1 </div>
     </main>
     <footer>
-
+        <div></div>
     </footer>
+
+    <script src="./js/book.js"></script>
 </body>
+
 </html>

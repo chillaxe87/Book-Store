@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book-Store</title>
+    <link rel="stylesheet" href="../css/header.css">
+    <link rel="stylesheet" href="../css/footer.css">
+    <link rel="stylesheet" href="./book.css">
+</head>
+
+<body>
+    <header>
+        <div class="header-main">
+            <div class="header-main__logo">
+                <img src="../img/Logo.png" alt="Book Store" id="main-logo"></img>
+            </div>
+            <div class="header-upper__search">
+                <input type="text" id="book-search">
+                <button id="search-button">Search</button>
+            </div>
+            <div class="header-main__user">
+                <span id="user">Hello Guest</span>
+                <button id="user-login">Login</button>
+            </div>
+            <div class="header-main__cart">
+                <div class="cart-container" id="cart">
+                    <span>0</span>
+                    <img src="../img/Cart.png" alt="">
+                </div>
+            </div>
+        </div>
+    </header>
+    <main>
+        <div class="main-container">
+            <div class="book-container">
+                <div class="info"> <h2>Becoming </h2> <p>Book about becoming something  </p>  </div>
+                <img src="https://powells-covers-2.s3.amazonaws.com/9780593303740.jpg" alt="">
+            </div>
+            <div class="add-to-cart">
+                <span class="get-it"></span>
+                <button id="add-to-cart">ADD TO CART</button>
+                <span class="price">only 15.99$</span>
+            </div>
+        </div>
+    </main>
+    <footer></footer>
+    <script src="../js/book.js"></script>
+</body>
+
+</html>
