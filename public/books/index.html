@@ -11,7 +11,8 @@
     <link rel="stylesheet" href="./book.css">
 </head>
 
-<body>
+<body onload="renderBook()">
+    <div class="backdrop"></div>
     <header>
         <div class="header-main">
             <div class="header-main__logo">
@@ -22,8 +23,12 @@
                 <button id="search-button">Search</button>
             </div>
             <div class="header-main__user">
-                <span id="user">Hello Guest</span>
-                <button id="user-login">Login</button>
+                <span id="user"></span>
+                <div>
+                    <button id="user-login" onclick="loginForm()">Login</button>
+                    <button id="user-signup" onclick="signUpForm()">Sign up</button>
+                    <button id="user-logout" onclick="logout()" class='hidden'>Logout</button>
+                </div>
             </div>
             <div class="header-main__cart">
                 <div class="cart-container" id="cart">
@@ -32,21 +37,37 @@
                 </div>
             </div>
         </div>
+        <div class="login hidden" id="login">
+            <form action="" id="login-form">
+                <input type="text" placeholder="Email" class="input-text">
+                <input type="password" placeholder="Password" class="input-text">
+                <input type="submit" value="Login" class="input-submit">
+            </form>
+        </div>
+        <div class="new-user hidden" id="new-user">
+            <form action="" id="new-user__form">
+                <input type="text" placeholder="Username" class="input-text">
+                <input type="text" placeholder="Email" class="input-text">
+                <input type="password" placeholder="Password" class="input-text">
+                <input type="submit" value="Sign Up" class="input-submit">
+            </form>
+        </div>
     </header>
     <main>
         <div class="main-container">
             <div class="book-container">
-                <div class="info"> <h2>Becoming </h2> <p>Book about becoming something  </p>  </div>
-                <img src="https://powells-covers-2.s3.amazonaws.com/9780593303740.jpg" alt="">
+                <img src="" alt="image">
+                <div class="info"> <h2></h2> <h3></h3><p></p></div>
             </div>
             <div class="add-to-cart">
                 <span class="get-it"></span>
                 <button id="add-to-cart">ADD TO CART</button>
-                <span class="price">only 15.99$</span>
+                <span class="price" id="book-price"></span>
             </div>
         </div>
     </main>
     <footer></footer>
+    <script src="./book.js"></script>
     <script src="../js/book.js"></script>
 </body>
 

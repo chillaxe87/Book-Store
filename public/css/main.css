@@ -1,8 +1,11 @@
+
 main{
     display: grid;
     width: 80%;
+    height: 100vh;
     margin: auto;
     background: #d1dae6;
+    border-style: ridge;
 }
 .books-container{
     padding-top: 40px;
@@ -10,7 +13,6 @@ main{
     width: 100%;
     grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
     margin: auto;
-    padding-bottom: 50px;
 }
 .book-container{
     text-align: center;
@@ -19,16 +21,15 @@ main{
     margin-top: 24px;
 }
 .book-container img{
-    height: 200px;
+    height: 300px;
 }
 .book{
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    width: 150px;
-    height: 270px;
-    /* background: white; */
-    /* border: black 1px solid; */
+    width: 200px;
+    height: 350px;
+    margin-bottom: 32px;
     cursor: pointer;
 }
 .title{
@@ -36,6 +37,12 @@ main{
     margin-bottom: 8px;
     font-size: 16px;
     font-weight: 700;
+}
+.author{
+    font-size: 14.4px;
+    margin-top: 8px;
+    margin-bottom: 8px;
+    font: #aaa
 }
 .price{
     font-size: 14.4px;

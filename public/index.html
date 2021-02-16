@@ -11,7 +11,8 @@
     <link rel="stylesheet" href="./css/footer.css">
 </head>
 
-<body>
+<body onload="renderBooksMain()">
+    <div class="backdrop"></div>
     <header>
         <div class="header-main">
             <div class="header-main__logo">
@@ -22,10 +23,11 @@
                 <button id="search-button">Search</button>
             </div>
             <div class="header-main__user">
-                <span id="user">Hello Guest</span>
+                <span id="user"></span>
                 <div>
-                    <button id="user-login">Login</button>
-                    <button id="user-signup">Sign up</button>
+                    <button id="user-login" onclick="loginForm()">Login</button>
+                    <button id="user-signup" onclick="signUpForm()">Sign up</button>
+                    <button id="user-logout" onclick="logout()" class='hidden'>Logout</button>
                 </div>
             </div>
             <div class="header-main__cart">
@@ -35,79 +37,32 @@
                 </div>
             </div>
         </div>
+        <div class="login hidden" id="login">
+            <form action="" id="login-form">
+                <input type="text" placeholder="Email" class="input-text">
+                <input type="password" placeholder="Password" class="input-text">
+                <input type="submit" value="Login" class="input-submit">
+            </form>
+        </div>
+        <div class="new-user hidden" id="new-user">
+            <form action="" id="new-user__form">
+                <input type="text" placeholder="Username" class="input-text">
+                <input type="text" placeholder="Email" class="input-text">
+                <input type="password" placeholder="Password" class="input-text">
+                <input type="submit" value="Sign Up" class="input-submit">
+            </form>
+        </div>
     </header>
     <main>
         <div class="books-container">
-            <div class="book-container">
+            <!-- <div class="book-container">
                 <div class="book" id="book">
-                    <span class="title">Becoming</span>
                     <img src="https://powells-covers-2.s3.amazonaws.com/9780593303740.jpg" alt="">
-                    <div class="price"> only 99.99 </div>
-                </div>
-            </div>
-            <div class="book-container">
-                <div class="book" id="book">
                     <span class="title">Becoming</span>
-                    <img src="https://powells-covers-2.s3.amazonaws.com/9780593303740.jpg" alt="">
-                    <div class="price"> only 99.99 </div>
+                    <span class="author">Michelle</span>
+                    <span class="price"> only 99.99 </span>
                 </div>
-            </div>
-            <div class="book-container">
-                <div class="book" id="book">
-                    <span class="title">Becoming</span>
-                    <img src="https://powells-covers-2.s3.amazonaws.com/9780593303740.jpg" alt="">
-                    <div class="price"> only 99.99 </div>
-                </div>
-            </div>
-            <div class="book-container">
-                <div class="book" id="book">
-                    <span class="title">Becoming</span>
-                    <img src="https://powells-covers-2.s3.amazonaws.com/9780593303740.jpg" alt="">
-                    <div class="price"> only 99.99 </div>
-                </div>
-            </div>
-            <div class="book-container">
-                <div class="book" id="book">
-                    <span class="title">Becoming</span>
-                    <img src="https://powells-covers-2.s3.amazonaws.com/9780593303740.jpg" alt="">
-                    <div class="price"> only 99.99 </div>
-                </div>
-            </div>
-            <div class="book-container">
-                <div class="book" id="book">
-                    <span class="title">Becoming</span>
-                    <img src="https://powells-covers-2.s3.amazonaws.com/9780593303740.jpg" alt="">
-                    <div class="price"> only 99.99 </div>
-                </div>
-            </div>
-            <div class="book-container">
-                <div class="book" id="book">
-                    <span class="title">Becoming</span>
-                    <img src="https://powells-covers-2.s3.amazonaws.com/9780593303740.jpg" alt="">
-                    <div class="price"> only 99.99 </div>
-                </div>
-            </div>
-            <div class="book-container">
-                <div class="book" id="book">
-                    <span class="title">Becoming</span>
-                    <img src="https://powells-covers-2.s3.amazonaws.com/9780593303740.jpg" alt="">
-                    <div class="price"> only 99.99 </div>
-                </div>
-            </div>
-            <div class="book-container">
-                <div class="book" id="book">
-                    <span class="title">Becoming</span>
-                    <img src="https://powells-covers-2.s3.amazonaws.com/9780593303740.jpg" alt="">
-                    <div class="price"> only 99.99 </div>
-                </div>
-            </div>
-            <div class="book-container">
-                <div class="book" id="book">
-                    <span class="title">Becoming</span>
-                    <img src="https://powells-covers-2.s3.amazonaws.com/9780593303740.jpg" alt="">
-                    <div class="price"> only 99.99 </div>
-                </div>
-            </div>  
+            </div> -->
         </div>
         <div class="books-page">page 1 </div>
     </main>

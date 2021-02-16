@@ -2,6 +2,8 @@ const express = require('express')
 const router = new express.Router()
 const auth = require('../middleware/auth')
 const Book = require('../models/book')
+const multer = require('multer')
+const sharp = require('sharp')
 
 
 // Create New Book  
@@ -16,8 +18,8 @@ router.post('/book/new', async (req, res) => {
 })
 
 // Add book to users cart by books ID and users authentication
-router.post('/book/add/:id', auth, async (req, res) => {
-    const book = await Book.findById(req.params.id)
+router.post('/book/add', auth, async (req, res) => {
+    const book = await Book.findById(req.query._id)
     book.owner.push(req.user._id)
     try {
         await book.save()
@@ -33,7 +35,7 @@ router.post('/user/cart/:id', auth, async (req, res) => {
     try {
         book.owner = book.owner.filter(owner => owner != req.user._id.toString())
         await book.save()
-        res.send(book)
+        res.send({book, removed : true})
     } catch (err) {
         res.status(500).send(err)
     }
@@ -49,6 +51,17 @@ router.get('/book/all', async (req, res) => {
     }
 })
 
+router.get('/book/get', async (req, res) => {
+    try {
+        const book = await Book.findById(req.query._id)
+        if (!book) {
+            return res.status(404).send()
+        }
+        res.send(book)
+    } catch (err) {
+        res.status(500).send(err)
+    }
+})
 // Get one book for add to cart page - no auth
 router.get('/book/:id', async (req, res) => {
     try {
@@ -95,7 +108,7 @@ router.patch('/book/:name', async (req, res) => {
 // Delete book from the data 
 router.delete('/book/:id', async (req, res) => {
     try {
-        const book = await Book.findByIdAndDelete(req.params.id)
+        const book = await Book.deleteOne({_id : req.params.id})
         res.send({
             book,
             deleted: true
@@ -104,5 +117,6 @@ router.delete('/book/:id', async (req, res) => {
         res.status(500).send(err)
     }
 })
+
 
 module.exports = router

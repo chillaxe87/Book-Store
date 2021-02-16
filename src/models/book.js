@@ -7,6 +7,11 @@ const bookSchema = new mongoose.Schema(
             required: true,
             trim: true
         },
+        author: {
+            type: String,
+            required: true,
+            trim: true
+        },
         price: {
             type: Number,
             require: true,
@@ -27,7 +32,7 @@ const bookSchema = new mongoose.Schema(
             ref: 'User'
         }],
         avatar: {
-            type: Buffer
+            type: Buffer,
         }
     }, {
         timestamps: true

@@ -1,35 +1,48 @@
 main{
     width: 80%;
     margin: auto;
+    height: 100vh;
+    border-style: ridge;
+    background-color: white;
 }
 .main-container{
     display: grid;
     grid-template-columns: 4fr 1fr ;
 }
 .book-container{
-    padding: 16px;
+    padding: 24px;
     display: flex;
-    justify-content: space-between
+
 }
 .info h2{
     color: #333;
     font-size: 28px;
     margin-bottom: 48px;
+    margin-left: 48px;
+    border-bottom: 1px lightgray solid;
+}
+.info h3{
+    color: #333;
+    font-size: 22px;
+    margin-bottom: 48px;
+    margin-left: 64px;
+    font-weight: 400;
 }
 .info p{
     color: #333;
     font-size: 16px;
-    margin-left: 16px;
+    margin-left: 48px;
+    margin-right: 48px;
 }
 .book-container img{
-    max-width: 500px;
-    max-width: 500px;
+    width: 330px;
+    height: 500px;
 }
 .add-to-cart{
     display: flex;
     flex-direction: column;
     margin: 16px;
-    border: 1px #333 solid;
+    border: 1px #333 outset;
 }
 .add-to-cart button {
     width: 80%;
@@ -41,10 +54,12 @@ main{
     font-weight: bold;
     padding-top: 8px;
     padding-bottom: 8px;
+    cursor: pointer;
 }
 .price{
     color: rgb(75, 155, 182);
-    font-size: 24px;
+    font-size: 36px;
+    font-weight: 500;
     margin: auto;
     margin-top: 16px
 

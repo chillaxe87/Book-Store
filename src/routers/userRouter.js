@@ -49,7 +49,13 @@ router.get('/users/cart', auth, async (req, res) => {
     } catch (err) {
         res.status(500).send()
     }
+})
 
+// get user 
+router.get('/users/me', auth, async (req, res) => {
+    if (req.user) {
+        res.send(req.user)
+    }
 })
 
 // update user info 
