@@ -1,0 +1,91 @@
+body{
+    margin: 0;
+    background-size: cover;
+    background-image: url('https://i2.wp.com/files.123freevectors.com/wp-content/original/105917-blue-and-white-diagonal-lines.jpg?w=800&q=95');
+}
+main {
+    width: 80%;
+    margin: auto;
+    position: relative;
+
+}
+.main-container{
+    padding: 32px;
+    min-height: 90vh;
+    padding-bottom: 72px;
+    border-style: ridge;
+    background-size: cover;
+    background-image: url('https://venngage-wordpress.s3.amazonaws.com/uploads/2018/09/Minimalist-Crumpled-Paper-Simple-Background-Image.jpg');
+}
+.book-container{
+    display: flex;
+    justify-content: space-between;
+    margin-top: 16px;
+}
+.book-container__inner{
+    display: flex;
+}
+.book-container img{
+    width: 110px;
+    height: 160px;
+}
+.info{
+    position: relative;
+}
+.info span{
+    cursor: pointer;
+    position: absolute;
+    color: darkred;
+    bottom: 8px;
+    left: 40px;
+}
+.title{
+    font-size: 24px;
+    margin-top: 5px;
+    margin-left: 32px;
+    color: #0c1445;
+    cursor: pointer;
+}
+.author{
+    font-size: 18px;
+    margin-top: 5px;
+    margin-left: 32px;
+    color: #0c1445;
+}
+.price{
+    display: inherit;
+    margin-right: 120px;
+    color: #0c1445;
+    align-items: center;
+    margin-top: 5px;
+}
+.checkout{
+    position: absolute;
+    font-size: 18px;
+    font-weight: bold;
+    right:2%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.checkout span{
+    padding: 12px 20px;
+    border: #0c1445 solid 3px;
+    border-radius: 15px;
+    background-image: linear-gradient(to bottom left, lightgoldenrodyellow , #0c1445 );
+    color: white;
+    cursor: pointer;
+    font-size: 20px;
+}
+.checkout span:hover{
+    padding: 15px 23px;
+    border: lightgoldenrodyellow solid 3px;
+}
+.checkout p {
+    text-align: center;
+}
+main .navigate{
+    display: none;
+}
+
+

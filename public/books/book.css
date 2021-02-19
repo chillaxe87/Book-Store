@@ -1,9 +1,14 @@
+body{
+    background-size: cover;
+    background-image: url('https://i2.wp.com/files.123freevectors.com/wp-content/original/105917-blue-and-white-diagonal-lines.jpg?w=800&q=95');
+}
 main{
     width: 80%;
     margin: auto;
     height: 100vh;
     border-style: ridge;
-    background-color: white;
+    background-size: cover;
+    background-image: url('https://venngage-wordpress.s3.amazonaws.com/uploads/2018/09/Minimalist-Crumpled-Paper-Simple-Background-Image.jpg');
 }
 .main-container{
     display: grid;
@@ -42,12 +47,12 @@ main{
     display: flex;
     flex-direction: column;
     margin: 16px;
-    border: 1px #333 outset;
+    height: 40%;
 }
 .add-to-cart button {
     width: 80%;
-    background-color: rgb(48, 48, 138);
-    color: white;
+    background-image: linear-gradient(to bottom right, #87ceeb , #0c1445 );
+    color: lightgoldenrodyellow;
     margin-left: 10%;
     margin-top: 48px;
     font-size: 18px;
@@ -55,12 +60,19 @@ main{
     padding-top: 8px;
     padding-bottom: 8px;
     cursor: pointer;
+    border-radius: 10px;
+}
+.add-to-cart button:hover {
+    background-image: linear-gradient(to top left, #87ceeb , #0c1445 );
 }
 .price{
-    color: rgb(75, 155, 182);
-    font-size: 36px;
-    font-weight: 500;
+    color: #0c1445;
+    font-size: 24px;
+    font-weight: bold;
     margin: auto;
     margin-top: 16px
 
+}
+main .navigate{
+    display: none;
 }

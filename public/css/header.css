@@ -11,7 +11,7 @@ body{
     height: 100px;
     display: grid;
     grid-template-columns: 2fr 5fr 2fr 1fr;
-    background: #4c394e;
+    background-image: linear-gradient(to bottom right, #87ceeb , #0c1445 );
     border-style: ridge;
 }
 .header-main__logo{
@@ -21,8 +21,11 @@ body{
 }
 .header-main__logo img{
     height: 70px;
-    background: #4c394e;
     cursor: pointer;
+    background-image: inherit;
+}
+.header-main__logo img:hover{
+    height: 75px;
 }
 .header-main__logo p{
     color:  white;
@@ -32,10 +35,37 @@ body{
 
 }
 .header-upper__search{
+    position: relative;
     display: inherit;
     grid-template-columns: 3fr 1fr;
     align-items: center;
 
+}
+input:focus{
+    outline: none;
+}
+.header-main__user button:hover{
+    font-size: 16px;
+}
+.header-upper__search ul{
+    position: absolute;
+    top: 45px;
+    background-color: rgba(255, 255, 255, 1);
+    border: solid #0c1445 1px;
+    border-radius: 5px;
+    z-index: 200;
+    padding: 10px;
+    width: 73%;
+}
+.header-upper__search li{
+    list-style: none;
+    cursor: pointer;
+    font-weight: bold;
+    color: #0c1445;
+    font-size: 16px;
+}
+.header-upper__search li:hover{
+    color: #87ceeb;
 }
 .header-upper__search input{
     height: 30%;
@@ -46,10 +76,17 @@ body{
 .header-upper__search button{
     height: 30%;
     border: none;
-    background: #10bbd5;
+    background: #0c1445;
     border-radius: 10px;
     font-weight: bold;
     cursor: pointer;
+    color: white;
+    width: 80%;
+    font-size: 16px;
+}
+.header-upper__search button:hover{
+    background-color: #87ceeb;
+    color: #0c1445;;
 }
 .header-main__user{
     display: flex;
@@ -60,12 +97,17 @@ body{
     font-weight: 700
 }
 .header-main__user button{
-    margin-top: 8px;
     border: none;
     border-radius: 5px;
-    padding: 2px 5px;
+    padding: 3px 8px;
     font-weight: 900;
     cursor: pointer;
+    color: #0c1445;
+    margin-left: 5px;
+}
+#user-logout{
+    margin-top: 5px;
+    margin-left: 0;
 }
 .header-main__cart{
     display: inherit;
@@ -77,12 +119,14 @@ body{
     cursor: pointer;
 }
 .header-main__cart img{
-    height: 40px;
     width: 50px;
 }
+.header-main__cart img:hover{
+    width: 60px;
+}
 .header-main__cart span{
-    color:	#ED1B24;
-    font-size: 25px;
+    color:	white;
+    font-size: 30px;
     font-weight: bold;
     height: 30px;
     margin-top: 10px;
@@ -119,11 +163,15 @@ body{
     width: 40%;
     margin-top: 24px;
     padding: 5px;
-    background: #10bbd5;
+    background: #0c1445;
+    color: white;
     border:none;
     border-radius: 20px;
     font-weight: bold;
     cursor: pointer;
+}
+.input-submit:hover{
+    background: #10bbd5;
 }
 .new-user{
     position: fixed;

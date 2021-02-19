@@ -16,11 +16,10 @@ addToCart.addEventListener('click', async () => {
                 throw new Error(res.status)
             }
         })
-        .then((jsonObj) => {
+        .then(() => {
             const cartCount = document.querySelector('#cart span')
             const plusOne = parseInt(cartCount.innerHTML) + 1
             cartCount.innerHTML = plusOne
-            updatePage(jsonObj)
         })
         .catch((err) => {
             console.log(err)

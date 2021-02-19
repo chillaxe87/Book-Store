@@ -8,10 +8,10 @@
     <title>Book-Store</title>
     <link rel="stylesheet" href="../css/header.css">
     <link rel="stylesheet" href="../css/footer.css">
-    <link rel="stylesheet" href="./book.css">
+    <link rel="stylesheet" href="./cart.css">
 </head>
 
-<body onload="renderBook()">
+<body onload="renderCart()">
     <div class="backdrop"></div>
     <header>
         <div class="header-main">
@@ -59,20 +59,11 @@
             <span id="back">back</span>
             <span id="next">next</span>
         </div>
-        <div class="main-container">
-            <div class="book-container">
-                <img src="" alt="image">
-                <div class="info"> <h2></h2> <h3></h3><p></p></div>
-            </div>
-            <div class="add-to-cart">
-                <span class="get-it"></span>
-                <button id="add-to-cart">ADD TO CART</button>
-                <span class="price" id="book-price"></span>
-            </div>
-        </div>
+        <div class="checkout" id="checkout"><p id="total"></p><span>Proceed to checkout</span> </div>
+        <div class="main-container" id='main-container'></div>
     </main>
     <footer></footer>
-    <script src="./book.js"></script>
+    <script src="./cart.js"></script>
     <script src="../js/book.js"></script>
 </body>
 
