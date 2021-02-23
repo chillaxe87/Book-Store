@@ -5,7 +5,8 @@ const bookSchema = new mongoose.Schema(
         name: {
             type: String,
             required: true,
-            trim: true
+            trim: true,
+            unique:true,
         },
         author: {
             type: String,
@@ -14,7 +15,7 @@ const bookSchema = new mongoose.Schema(
         },
         price: {
             type: Number,
-            require: true,
+            required: true,
             trim: true
         },
         description: {

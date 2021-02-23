@@ -23,12 +23,11 @@ const signUpForm = () => {
 }
 const backgroundBlur = (searchbar = false) => {
     blur.classList.add('open')
-    if(searchbar){
+    if (searchbar) {
         blur.style.background = 'transparent'
     }
 }
 const backgroundRemoveBlur = () => {
-    // document.querySelector(".backdrop").classList.remove('open')
     document.getElementById("login").classList.add("hidden")
     document.getElementById("new-user").classList.add("hidden")
     blur.classList = "backdrop"
@@ -79,29 +78,37 @@ next.addEventListener('click', event => {
     renderBooksMain(page)
 })
 
-// search Bar 
-bookSearch.addEventListener('keyup', async () => {
-    let input = bookSearch.value;
-    if (input.length >= 3) {
-        await fetch(`http://localhost:3000/book/find/?text=${input}`)
+// Fetch books by name
+const fetchBooksByName = async (input) => {
+    const data = await fetch(`${location.origin}/book/find/?text=${input}`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    })
         .then((res) => {
-            if(res.ok){
+            if (res.ok) {
                 return res.json()
             } else {
                 throw new Error(res.status)
             }
         })
-        .then((jsonObj) => {
-            if(jsonObj.length > 0){
-                backgroundBlur(true)
-                searchButton.style.zIndex = 300
-                renderSearchList(jsonObj)
-            }
-            return jsonObj
-        })
         .catch((err) => {
             console.log(err)
         })
+    return data
+}
+
+// Search bar 
+bookSearch.addEventListener('keyup', async () => {
+    let input = bookSearch.value;
+    if (input.length >= 3) {
+        const books = await fetchBooksByName(input)
+        if (books) {
+            backgroundBlur(true)
+            searchButton.style.zIndex = 300
+            renderSearchList(books)
+        }
     } else {
         searchList.className = 'hidden'
     }
@@ -118,51 +125,46 @@ const renderSearchList = (books) => {
         const li = document.createElement('li')
         li.innerHTML = book.name
         li.addEventListener('click', () => {
-            window.location.href = `./books/?_id=${book._id}&name=${book.name}`
+            window.location.href = `${location.origin}/books/?_id=${book._id}&name=${book.name}`
         })
         searchList.appendChild(li)
     })
 }
-searchButton.addEventListener('click', async (event)=> {
+
+searchButton.addEventListener('click', async (event) => {
     event.preventDefault()
     let input = bookSearch.value;
     backgroundRemoveBlur()
-
     if (input.length >= 3) {
-        await fetch(`http://localhost:3000/book/find/?text=${input}`)
-        .then((res) => {
-            if(res.ok){
-                return res.json()
-            } else {
-                throw new Error(res.status)
+        const books = await fetchBooksByName(input)
+        if (books) {
+            while (mainContainer.children.length > 1) {
+                mainContainer.removeChild(mainContainer.lastChild)
             }
-        })
-        .then((jsonObj) => {
-            if(jsonObj.length > 0){
-                while (mainContainer.children.length > 1) {
-                    mainContainer.removeChild(mainContainer.lastChild)
-                }
-                jsonObj.forEach(book => createBookDiv(book))
-            }
-            return jsonObj
-        })
-        .catch((err) => {
-            console.log(err)
-        })
-    } else {
-        searchList.className = 'hidden'
+            books.forEach(book => createBookDiv(book))
+        } else {
+            searchList.className = 'hidden'
+        }
     }
-
 })
 
 // create new user
 const newUser = document.getElementById('new-user__form')
+
 newUser.addEventListener('submit', async (event) => {
     event.preventDefault()
     const username = document.querySelector('#new-user__form').children[0].value
     const email = document.querySelector('#new-user__form').children[1].value
     const password = document.querySelector('#new-user__form').children[2].value
-    await fetch('http://localhost:3000/users/new', {
+    const user = await fetchNewUser(username, email, password)
+    if (user) {
+        backgroundRemoveBlur()
+        localStorage.setItem('token', user.token);
+        loggedInMode(user.user.username)
+    }
+})
+const fetchNewUser = async (username, email, password) => {
+    const user = await fetch(`${location.origin}/users/new`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -180,15 +182,11 @@ newUser.addEventListener('submit', async (event) => {
                 throw new Error(res.status)
             }
         })
-        .then((jsonObj) => {
-            backgroundRemoveBlur()
-            localStorage.setItem('token', jsonObj.token);
-            loggedInMode(jsonObj.user.username)
-        })
         .catch((err) => {
             console.log(err)
         })
-})
+    return user
+}
 
 // Login user
 const login = document.getElementById('login-form')
@@ -196,7 +194,17 @@ login.addEventListener('submit', async (event) => {
     event.preventDefault()
     const email = document.querySelector('#login-form').children[0].value
     const password = document.querySelector('#login-form').children[1].value
-    await fetch('http://localhost:3000/users/login', {
+    const user = await fetchLogin('users', email, password)
+    if (user) {
+        backgroundRemoveBlur()
+        localStorage.setItem('token', user.token);
+        getUserCart(user.token)
+        loggedInMode(user.user.username)
+    }
+    location.reload();
+})
+const fetchLogin = async (type, email, password) => {
+    const user = await fetch(`${location.origin}/${type}/login`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -213,24 +221,17 @@ login.addEventListener('submit', async (event) => {
                 throw new Error(res.status)
             }
         })
-        .then((jsonObj) => {
-            backgroundRemoveBlur()
-            localStorage.setItem('token', jsonObj.token);
-            getUserCart(jsonObj.token)
-            loggedInMode(jsonObj.user.username)
-        })
         .catch((err) => {
             alert('Wrong Credentials')
             console.log(err)
         })
-
-    location.reload();
-})
-
+    return user
+}
 // Logout user
-const logout = async () => {
+
+const fetchLogout = async (type) => {
     token = localStorage.getItem('token')
-    await fetch('http://localhost:3000/users/logout', {
+    const user = await fetch(`${location.origin}/${type}/logout`, {
         method: 'POST',
         headers: {
             'Authorization': `Bearer ${token}`
@@ -238,9 +239,7 @@ const logout = async () => {
     })
         .then((res) => {
             if (res.ok) {
-                localStorage.removeItem('token')
-                alert("logout successfully")
-                loggedOutMode()
+                return res.json()
             } else {
                 throw new Error(res.status)
             }
@@ -248,9 +247,16 @@ const logout = async () => {
         .catch((err) => {
             console.log(err)
         })
-    window.location.href = "../"
-
-
+    return user
+}
+const logout = async () => {
+    const user = await fetchLogout('users')
+    if (user) {
+        localStorage.removeItem('token')
+        alert("logout successfully")
+        loggedOutMode()
+    }
+    window.location.href = location.origin
 }
 // Get all books 
 const renderBooksMain = async () => {
@@ -259,7 +265,14 @@ const renderBooksMain = async () => {
         getUser(token)
     }
     const skip = page * 10
-    await fetch(`http://localhost:3000/book/all/?page=${skip}`, {
+    const books = await fetchBooks(skip)
+    if (books) {
+        books.forEach(book => createBookDiv(book))
+    }
+}
+
+const fetchBooks = async (skip) => {
+    const books = await fetch(`${location.origin}/book/all/?page=${skip}`, {
         method: 'GET'
     })
         .then((res) => {
@@ -269,16 +282,21 @@ const renderBooksMain = async () => {
                 throw new Error(res.status)
             }
         })
-        .then((jsonObj) => {
-            jsonObj.forEach(el => createBookDiv(el))
-        })
         .catch((err) => {
             console.log(err)
         })
+    return books
 }
 // get user
 const getUser = async (token) => {
-    await fetch('http://localhost:3000/users/me', {
+    const user = await fetchUser(token)
+    if (user) {
+        getUserCart(token)
+        loggedInMode(user.username)
+    }
+}
+const fetchUser = async (token) => {
+    const user = await fetch(`${location.origin}/users/me`, {
         method: 'GET',
         headers: {
             'Authorization': `Bearer ${token}`
@@ -292,19 +310,21 @@ const getUser = async (token) => {
                 throw new Error('not logged in')
             }
         })
-        .then((jsonObj) => {
-            getUserCart(token)
-            loggedInMode(jsonObj.username)
-            return jsonObj
-        })
         .catch((err) => {
             console.log(err)
         })
+    return user
 }
-
 // Get users books
 const getUserCart = async (token) => {
-    await fetch('http://localhost:3000/users/cart', {
+    const cart = await fetchCart(token)
+    if (cart) {
+        document.querySelector('#cart span').innerHTML = cart.length
+    }
+
+}
+const fetchCart = async (token) => {
+    const cart = await fetch(`${location.origin}/users/cart`, {
         method: 'GET',
         headers: {
             'Authorization': `Bearer ${token}`
@@ -317,14 +337,12 @@ const getUserCart = async (token) => {
                 throw new Error('No cart available')
             }
         })
-        .then((jsonObj) => {
-            document.querySelector('#cart span').innerHTML = jsonObj.length
-            return jsonObj
-        })
         .catch((err) => {
             console.log(err)
         })
+    return cart
 }
+
 // book page getting info
 const renderBook = async () => {
     const token = localStorage.getItem('token')
@@ -332,7 +350,14 @@ const renderBook = async () => {
         getUser(token)
     }
     const url = window.location.href.replace('books', 'book/get')
-    await fetch(url)
+    const book = await fetchBook(url)
+    if (book) {
+        updatePage(book)
+    }
+}
+const fetchBook = async (url) => {
+    console.log(url)
+    const book = await fetch(url)
         .then((res) => {
             if (res.ok) {
                 return res.json()
@@ -340,12 +365,11 @@ const renderBook = async () => {
                 throw new Error(res.status)
             }
         })
-        .then((jsonObj) => {
-            updatePage(jsonObj)
-        })
         .catch((err) => {
             console.log(err)
         })
+    console.log(book)
+    return book
 }
 // main page book render
 const createBookDiv = (el) => {
@@ -371,7 +395,7 @@ const createBookDiv = (el) => {
     book.appendChild(author)
     book.appendChild(price)
     book.addEventListener('click', () => {
-        window.location.href = `./books/?_id=${el._id}&name=${el.name}`
+        window.location.href = `${location.origin}/books/?_id=${el._id}&name=${el.name}`
     })
 }
 
@@ -388,35 +412,18 @@ const updatePage = (book) => {
 // cart page render 
 const renderCart = async () => {
     const token = localStorage.getItem('token')
-
     if (token != undefined) {
         getUser(token)
     }
-    await fetch('http://localhost:3000/users/cart', {
-        method: 'GET',
-        headers: {
-            'Authorization': `Bearer ${token}`
-        }
-    })
-        .then((res) => {
-            if (res.ok) {
-                return res.json()
-            } else {
-                throw new Error('Error loading cart')
-            }
+    const cart = await fetchCart(token)
+    if (cart) {
+        let price = 0;
+        cart.forEach(el => {
+            renderCartBook(el)
+            price += el.price
         })
-        .then((jsonObj) => {
-            let price = 0;
-            jsonObj.forEach(el => {
-                renderCartBook(el)
-                price += el.price
-            })
-            document.getElementById("total").innerHTML = `Total: ${price}$`
-        })
-        .catch((err) => {
-            console.log(err)
-        })
-
+        document.getElementById("total").innerHTML = `Total: ${price}$`
+    }
 }
 
 const cartDiv = document.getElementById("main-container")
@@ -433,8 +440,7 @@ const renderCartBook = (el) => {
     title.className = "title"
     title.innerHTML = el.name
     title.addEventListener('click', () => {
-        const url = window.location.href.replace('cart', 'books')
-        window.location.href = `${url}?_id=${el._id}&name=${el.name}`
+        window.location.href = `${location.origin}/books?_id=${el._id}&name=${el.name}`
     })
     const author = document.createElement('h2')
     author.className = "author"

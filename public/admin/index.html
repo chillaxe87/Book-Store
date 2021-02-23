@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book-Store</title>
+    <link rel="stylesheet" href="../css/header.css">
+    <link rel="stylesheet" href="../css/main.css">
+    <link rel="stylesheet" href="../css/footer.css">
+    <link rel="stylesheet" href="./admin.css">
+</head>
+
+<body>
+    <div class="backdrop"></div>
+    <header>
+        <div class="header-main">
+            <div class="header-main__user">
+                <span id="user"></span>
+                <div>
+                    <input type="text" placeholder="username" id="admin-name">
+                    <input type="password" placeholder="password" id="admin-password">
+                    <button id="admin-login">Login</button>
+                    <button id="admin-logout"" class='hidden'>Logout</button>
+                </div>
+            </div>
+        </div>
+    </header>
+    <main>
+        <div class=" options">
+                        <span id="show-add-book">Add Book</span>
+                        <span id="show-edit-book">Edit/Delete Book</span>
+                </div>
+                <div class="main-container">
+                    <div class="admin-search" id="admin-search">
+                        <p>Search book's name to Edit/Delete</p>
+                        <div><input type="text" placeholder="Name of the book" id="admin-search-input">
+                            <button id="search-book">Find</button>
+                        </div>
+                    </div>
+                    <div class="add-book close" id="add-book">
+                        <div class="add-book__section">
+                            <p>Books name:</p><input type="text" class="add-book_name">
+                        </div>
+                        <div class="add-book__section">
+                            <p>Author: </p><input type="text" class="add-book_author">
+                        </div>
+                        <div class="add-book__section">
+                            <p>Price:</p><input type="text" class="add-book_price">
+                        </div>
+                        <div class="add-book__section">
+                            <p>Pages: </p><input type="text" class="add-book_pages">
+                        </div>
+                        <div class="add-book__section">
+                            <p>description:</p><textarea class="add-book_description"> </textarea>
+                        </div>
+                        <div class="add-book__section">
+                            <p>Image for book:</p><input type="text" placeholder="url" class="add-book_avatar">
+                        </div>
+                        <button class="add-book_upload" id="upload-book">Upload</button>
+                    </div>
+                    <div class="book-info" id="book-edit">
+                        <div><img src="../img/noBook.png" alt=""></div>
+                        <div>
+                            <div class="book-info__text">
+                                <div>
+                                    <p>Name:</p><input type="text" id="edit-name">
+                                </div>
+                                <div>
+                                    <p>Author:</p><input type="text" id="edit-author">
+                                </div>
+                            </div>
+                            <div class="book-info__text">
+                                <div>
+                                    <p>Price:</p><input type="text" id="edit-price">
+                                </div>
+                                <div>
+                                    <p>Pages:</p><input type="text" id="edit-pages">
+                                </div>
+                            </div>
+                            <div class='book-info__description'>
+                                <p>Description:</p> <textarea name="" id="edit-description" cols="30"
+                                    rows="10"></textarea>
+                            </div>
+                        </div>
+                        <div class="edit-button">
+                            <button class="admin-edit">Update Book</button>
+                            <button class="admin-delete">Delete Book</button>
+                        </div>
+                    </div>
+
+                </div>
+                </main>
+                <footer>
+                    <div></div>
+                </footer>
+                <script src="./admin.js"></script>
+</body>
+
+</html>

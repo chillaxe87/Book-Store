@@ -26,9 +26,9 @@ const userSchema = new mongoose.Schema(
         password: {
             type: String,
             trim: true,
-            require: true,
-            validator(value) {
-                if(value.length < 7) {
+            required: true,
+            validate(value) {
+                if (value.length < 7) {
                     throw new Error('Password must be at least 8 characters long')
                 }
             }
@@ -59,11 +59,9 @@ userSchema.methods.toJSON = function () {
     return userObject
 }
 
-JWT_Secret = process.env.JWT_SECRET
 userSchema.methods.generateAuthToken = async function () {
     const user = this
-    const token = jwt.sign({ _id: user._id.toString() }, JWT_Secret)
-
+    const token = jwt.sign({ _id: user._id.toString() }, process.env.JWT_SECRET)
     user.tokens = user.tokens.concat({token})
     await user.save()
 
@@ -75,9 +73,7 @@ userSchema.statics.findByCredentials = async (email, password) => {
     if (!user) {
         throw new Error ('Email or password is incorrect')
     }
-
     const isMatch = await bcrypt.compare(password, user.password)
-
     if(!isMatch) {
         throw new Error ('Email or password is incorrect')
     }

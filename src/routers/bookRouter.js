@@ -1,13 +1,14 @@
 const express = require('express')
 const router = new express.Router()
 const auth = require('../middleware/auth')
+const authAdmin = require('../middleware/admin-auth')
 const Book = require('../models/book')
 const multer = require('multer')
 const sharp = require('sharp')
 
 
 // Create New Book  
-router.post('/book/new', async (req, res) => {
+router.post('/book/new', authAdmin, async (req, res) => {
     const book = new Book(req.body)
     try {
         await book.save()
@@ -80,7 +81,7 @@ router.get('/book/get', async (req, res) => {
     try {
         const book = await Book.findById(req.query._id)
         if (!book) {
-            return res.status(404).send()
+            return res.status(404).send(null)
         }
         res.send(book)
     } catch (err) {
@@ -93,11 +94,11 @@ router.get('/book/get', async (req, res) => {
 router.get('/book/find', async (req, res) => {
     const search = req.query.text.toString()
     try {
-        const books =  await Book.find({ name: { "$regex": search, "$options": "i" } });
-        if (!books) {
+        const book = await Book.find({ name: { "$regex": search, "$options": "i" } });
+        if (!book) {
             return res.status(404).send({ message: "no books found" })
         }
-        res.send(books)
+        res.send(book)
     } catch (err) {
         res.status(500).send(err)
     }
@@ -116,37 +117,31 @@ router.get('/book/:id', async (req, res) => {
 })
 
 // Update books info - no auth
-router.patch('/book/:name', async (req, res) => {
-    const booksAll = await Book.find({})
-    const books = booksAll.filter(book => book.name == req.params.name)
-
+router.patch('/book/:id', authAdmin, async (req, res) => {
+    const book = await Book.findById(req.params.id)
     const updates = Object.keys(req.body)
-    const allowedUpdates = ['name', 'price', 'description', 'pages', 'avatar']
-
+    const allowedUpdates = ['name', 'author', 'price', 'description', 'pages', 'avatar']
     const isValidUpdate = updates.every((update) => {
         return allowedUpdates.includes(update)
     })
-
     if (!isValidUpdate) {
         return res.status(400).send({
             error: "Invalid Updates"
         })
     }
     try {
-        for (i = 0; i < books.length; i++) {
-            updates.forEach((update) => {
-                books[i][update] = req.body[update]
-            })
-            await books[i].save()
-        }
-        res.send(books)
+        updates.forEach((update) => {
+            book[update] = req.body[update]
+        })
+        await book.save()
+        res.send(book)
     } catch (err) {
         res.status(500).send(err)
     }
 })
 
 // Delete book from the data 
-router.delete('/book/:id', async (req, res) => {
+router.delete('/book/:id', authAdmin, async (req, res) => {
     try {
         const book = await Book.deleteOne({ _id: req.params.id })
         res.send({
