@@ -33,8 +33,7 @@ checkout.addEventListener('click', async (event) => {
     })
     .then((res) => {
         if (res.ok) {
-            alert("Thank you for your purchase")
-            location.reload()
+            purchaseAlert()
             return res.json()
         } else {
             throw new Error ('Book not found')
@@ -44,5 +43,16 @@ checkout.addEventListener('click', async (event) => {
         console.log(err)
     })
 })
+
+const backdrop = document.querySelector('.backdrop')
+const purchaseDiv = document.getElementById("purchase-Div")
+const purchaseAlert = () => {
+    backdrop.classList.add('open')
+    purchaseDiv.classList.remove('hidden')
+}
+const reloadPage = () => {
+    location.reload();
+}
+
 
 

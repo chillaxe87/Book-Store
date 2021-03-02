@@ -12,7 +12,7 @@
     <link rel="stylesheet" href="./admin.css">
 </head>
 
-<body>
+<body onload="renderBooksMain()">
     <div class="backdrop"></div>
     <header>
         <div class="header-main">
@@ -60,7 +60,7 @@
                         </div>
                         <button class="add-book_upload" id="upload-book">Upload</button>
                     </div>
-                    <div class="book-info" id="book-edit">
+                    <div class="book-info close" id="book-edit">
                         <div><img src="../img/noBook.png" alt="" id="edit-avatar"></div>
                         <div>
                             <div class="book-info__text">
@@ -92,11 +92,14 @@
                             <button class="admin-delete">Delete Book</button>
                         </div>
                     </div>
-
+                    <div class="main-list"></div>
                 </div>
                 </main>
                 <footer>
-                    <div></div>
+                    <div class="navigate">
+                        <span id="back">back</span>
+                        <span id="next">next</span>
+                    </div>
                 </footer>
                 <script src="./admin.js"></script>
 </body>

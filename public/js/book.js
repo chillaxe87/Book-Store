@@ -50,7 +50,9 @@ const loggedOutMode = (name = 'Guest') => {
     document.querySelector('#cart span').innerHTML = 0
 }
 blur.addEventListener('click', () => {
-    backgroundRemoveBlur()
+    if(window.location.pathname !== "/cart/"){
+        backgroundRemoveBlur()
+    }
 })
 
 // Navigation 
@@ -100,18 +102,22 @@ const fetchBooksByName = async (input) => {
 }
 
 // Search bar 
-bookSearch.addEventListener('keyup', async () => {
-    let input = bookSearch.value;
-    if (input.length >= 3) {
-        const books = await fetchBooksByName(input)
-        if (books) {
-            backgroundBlur(true)
-            searchButton.style.zIndex = 300
-            renderSearchList(books)
+let timeout = null
+bookSearch.addEventListener('keyup', () => {
+    clearTimeout(timeout);
+    timeout = setTimeout( async () =>{
+        let input = bookSearch.value;
+        if (input.length >= 2) {
+            const books = await fetchBooksByName(input)
+            if (books) {
+                backgroundBlur(true)
+                searchButton.style.zIndex = 300
+                renderSearchList(books)
+            }
+        } else {
+            searchList.className = 'hidden'
         }
-    } else {
-        searchList.className = 'hidden'
-    }
+    }, 1000)
 })
 
 // render search list according to input
@@ -451,7 +457,7 @@ const renderCartBook = (el) => {
     })
     const author = document.createElement('h2')
     author.className = "author"
-    author.innerHTML = el.author
+    author.innerHTML = ` by: ${el.author}`
     const span = document.createElement('span')
     span.innerHTML = "Remove"
     span.addEventListener('click', (event) => {

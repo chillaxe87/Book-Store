@@ -81,6 +81,7 @@
     margin-top: 50px;
     display: grid;
     grid-template-columns: 1fr 3fr;
+    margin-bottom: 100px
 }
 .book-info__text{
     margin-top: 32px;
@@ -154,4 +155,8 @@
 #edit-avatar{
     max-width: 200px;
     max-height: 300px;
+}
+.main-list{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr
 }

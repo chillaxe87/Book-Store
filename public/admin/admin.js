@@ -251,17 +251,19 @@ searchBook.addEventListener('click', async () => {
         if (book.length > 0) {
             localStorage.setItem('id', book[0]._id)
         }
+        bookEdit.classList.remove("close")
         renderEditBook(book)
     }
 })
-const renderEditBook = (book) => {
-    if (book.length > 0) {
-        editName.value = book[0].name
-        editAuthor.value = book[0].author
-        editPrice.value = book[0].price
-        editPages.value = book[0].pages
-        editDescription.value = book[0].description
-        avatar.src = book[0].avatar ? `${location.origin}/books/avatar/${book[0]._id}` : " ../img/noBook.png"
+const renderEditBook = (thisBook ,single) => {
+    const book = single? thisBook: thisBook[0]
+    if (book.length > 0 || single) {
+        editName.value = book.name
+        editAuthor.value = book.author
+        editPrice.value = book.price
+        editPages.value = book.pages
+        editDescription.value = book.description
+        avatar.src = book.avatar ? `${location.origin}/books/avatar/${book._id}` : " ../img/noBook.png"
     } else {
         editName.value = ""
         editAuthor.value = ""
@@ -322,4 +324,78 @@ const fetchLoggedAdmin = async (token) => {
         })
     return user
 }
+// render books for main page
+let page = 0
+const bookListContainer = document.querySelector('.main-list')
+const renderBooksMain = async () => {
+    const skip = page * 12
+    const books = await fetchBooks(skip)
+    if (books) {
+        books.forEach(book => createBookDiv(book))
+    }
+}
+
+const fetchBooks = async (skip) => {
+    const books = await fetch(`${location.origin}/book/all/?page=${skip}`, {
+        method: 'GET'
+    })
+        .then((res) => {
+            if (res.ok) {
+                return res.json()
+            } else {
+                throw new Error(res.status)
+            }
+        })
+        .catch((err) => {
+            console.log(err)
+        })
+    return books
+}
+const createBookDiv = (el) => {
+    const container = document.createElement('div')
+    container.className = "book-container"
+    const book = document.createElement('div')
+    book.className = "book"
+    const img = document.createElement('img')
+    if (!el.avatar) {
+        img.src = "../img/noBook.png"
+    } else {
+        img.src = `${location.origin}/books/avatar/${el._id}`
+    }
+    const title = document.createElement('span')
+    title.className = 'title'
+    title.innerHTML = el.name
+    const author = document.createElement('span')
+    author.className = 'author'
+    author.innerHTML = `By: ${el.author}`
+    const price = document.createElement('span')
+    price.className = 'price'
+    price.innerHTML = `${el.price} $`
+    bookListContainer.appendChild(container)
+    container.appendChild(book)
+    book.appendChild(img)
+    book.appendChild(title)
+    book.appendChild(author)
+    book.appendChild(price)
+    book.addEventListener('click', () => {
+        bookEdit.classList.remove("close")
+        renderEditBook(el, true)
+    })
+}
+back.addEventListener('click', event => {
+    event.preventDefault()
+    page = page === 0 ? 0 : page - 1
+    while (bookListContainer.children.length > 0) {
+        bookListContainer.removeChild(bookListContainer.lastChild)
+    }
+    renderBooksMain(page)
+})
+next.addEventListener('click', event => {
+    event.preventDefault()
+    page = bookListContainer.children.length < 12 ? page : page + 1
+    while (bookListContainer.children.length > 0) {
+        bookListContainer.removeChild(bookListContainer.lastChild)
+    }
+    renderBooksMain(page)
+})
 getAdmin()
