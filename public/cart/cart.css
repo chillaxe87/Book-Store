@@ -122,5 +122,9 @@ main .navigate{
         font-size: 14.4px;
     }
 }
-
+@media only screen and (max-width: 1500px) {
+    .main-container{
+        padding: 8px;
+    }
+}
 
