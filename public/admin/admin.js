@@ -105,7 +105,7 @@ const fetchNewBook = async (name, author, price, pages, description, token) => {
             author,
             price,
             description,
-            pages
+            pages,
         })
     })
         .then((res) => {
@@ -120,6 +120,26 @@ const fetchNewBook = async (name, author, price, pages, description, token) => {
         })
     return book
 }
+const addBookAvatar = async (id, avatar, token) => {
+    await fetch(`${location.origin}/books/avatar/${id}`, {
+        method: 'POST',
+        headers: {
+            'Authorization': `Bearer ${token}`
+        },
+        body: avatar
+    })
+        .then((res) => {
+            if (res.ok) {
+                return true
+            } else {
+                throw new Error(res.status)
+            }
+        })
+        .catch((err) => {
+            console.log(err)
+        })
+}
+
 uploadBook.addEventListener('click', async (event) => {
     event.preventDefault()
     const name = addBookName.value
@@ -127,11 +147,16 @@ uploadBook.addEventListener('click', async (event) => {
     const price = addBookPrice.value
     const pages = addBookPages.value
     const description = addBookDescription.value
-    const avatarUrl = addAvatarUrl.value
+    const avatar = addAvatarUrl.files[0]
     const token = localStorage.getItem('atoken')
 
     const book = await fetchNewBook(name, author, price, pages, description, token)
     if (book) {
+        if(avatar){
+            const formData = new FormData()
+            formData.append('avatar', avatar )      
+            await addBookAvatar(book._id, formData, token)
+        }
         alert(`${book.name.toString()} Added to the store`)
     }
 })
@@ -143,6 +168,8 @@ const editAuthor = document.getElementById('edit-author')
 const editPrice = document.getElementById('edit-price')
 const editPages = document.getElementById('edit-pages')
 const editDescription = document.getElementById("edit-description")
+const avatar = document.getElementById("edit-avatar")
+const editAvatar = document.querySelector(".edit-book_avatar")
 
 const editButton = document.querySelector('.admin-edit')
 const fetchEditBook = async (name, author, price, pages, description, token) => {
@@ -181,8 +208,13 @@ editButton.addEventListener('click', async (event) => {
     const pages = editPages.value
     const description = editDescription.value
     const token = localStorage.getItem('atoken')
-
+    const avatar = editAvatar.files[0]
     const book = await fetchEditBook(name, author, price, pages, description, token)
+    if(avatar){
+        const formData = new FormData()
+        formData.append('avatar', avatar )      
+        await addBookAvatar(book._id, formData, token)
+    }
     if (book) {
         alert(book.name.toString() + ` has been updated`)
     }
@@ -229,6 +261,7 @@ const renderEditBook = (book) => {
         editPrice.value = book[0].price
         editPages.value = book[0].pages
         editDescription.value = book[0].description
+        avatar.src = book[0].avatar ? `${location.origin}/books/avatar/${book[0]._id}` : " ../img/noBook.png"
     } else {
         editName.value = ""
         editAuthor.value = ""

@@ -71,7 +71,7 @@ back.addEventListener('click', event => {
 })
 next.addEventListener('click', event => {
     event.preventDefault()
-    page = mainContainer.children.length <= 10 ? page : page + 1
+    page = mainContainer.children.length <= 12 ? page : page + 1
     while (mainContainer.children.length > 1) {
         mainContainer.removeChild(mainContainer.lastChild)
     }
@@ -264,7 +264,7 @@ const renderBooksMain = async () => {
     if (token != undefined) {
         getUser(token)
     }
-    const skip = page * 10
+    const skip = page * 12
     const books = await fetchBooks(skip)
     if (books) {
         books.forEach(book => createBookDiv(book))
@@ -378,7 +378,12 @@ const createBookDiv = (el) => {
     const book = document.createElement('div')
     book.className = "book"
     const img = document.createElement('img')
-    img.src = "../img/noBook.png"
+    if (!el.avatar) {
+        img.src = "../img/noBook.png"
+    } else {
+        img.src = `${location.origin}/books/avatar/${el._id}`
+    }
+
     const title = document.createElement('span')
     title.className = 'title'
     title.innerHTML = el.name
@@ -404,7 +409,7 @@ const updatePage = (book) => {
     document.querySelector('h2').innerHTML = book.name
     document.querySelector('h3').innerHTML = "by: " + book.author
     document.querySelector('p').innerHTML = book.description
-    document.querySelector('.book-container img').src = book.avatar === undefined ? "../img/noBook.png" : book.avatar
+    document.querySelector('.book-container img').src = !book.avatar? "../img/noBook.png" : `${location.origin}/books/avatar/${book._id}`
     document.getElementById('book-price').innerHTML = book.price + "$"
 }
 
@@ -433,7 +438,7 @@ const renderCartBook = (el) => {
     const bookContainer = document.createElement('div')
     bookContainer.className = "book-container__inner"
     const img = document.createElement('img')
-    img.src = "../img/noBook.png"
+    img.src = !el.avatar? "../img/noBook.png" : `${location.origin}/books/avatar/${el._id}`
     const info = document.createElement('div')
     info.className = "info"
     const title = document.createElement('h2')

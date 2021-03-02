@@ -56,12 +56,12 @@
                             <p>description:</p><textarea class="add-book_description"> </textarea>
                         </div>
                         <div class="add-book__section">
-                            <p>Image for book:</p><input type="text" placeholder="url" class="add-book_avatar">
+                            <p>Image for book:</p><input type="file" placeholder="url" class="add-book_avatar">
                         </div>
                         <button class="add-book_upload" id="upload-book">Upload</button>
                     </div>
                     <div class="book-info" id="book-edit">
-                        <div><img src="../img/noBook.png" alt=""></div>
+                        <div><img src="../img/noBook.png" alt="" id="edit-avatar"></div>
                         <div>
                             <div class="book-info__text">
                                 <div>
@@ -78,6 +78,9 @@
                                 <div>
                                     <p>Pages:</p><input type="text" id="edit-pages">
                                 </div>
+                            </div>
+                            <div class="add-book__section">
+                                <p>Image for book:</p><input type="file" placeholder="url" class="edit-book_avatar">
                             </div>
                             <div class='book-info__description'>
                                 <p>Description:</p> <textarea name="" id="edit-description" cols="30"

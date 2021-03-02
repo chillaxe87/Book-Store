@@ -69,7 +69,7 @@ router.post('/user/cart/all', auth, async (req, res) => {
 router.get('/book/all', async (req, res) => {
     const page = parseInt(req.query.page)
     try {
-        const books = await Book.find({}, null, { limit: 10, skip: page }).exec()
+        const books = await Book.find({}, null, { limit: 12, skip: page }).exec()
         res.send(books)
     } catch (err) {
         res.status(500).send()
@@ -120,7 +120,7 @@ router.get('/book/:id', async (req, res) => {
 router.patch('/book/:id', authAdmin, async (req, res) => {
     const book = await Book.findById(req.params.id)
     const updates = Object.keys(req.body)
-    const allowedUpdates = ['name', 'author', 'price', 'description', 'pages', 'avatar']
+    const allowedUpdates = ['name', 'author', 'price', 'description', 'pages']
     const isValidUpdate = updates.every((update) => {
         return allowedUpdates.includes(update)
     })
@@ -153,5 +153,40 @@ router.delete('/book/:id', authAdmin, async (req, res) => {
     }
 })
 
+const upload = multer ({
+    limits:{
+        fileSize: 10000000
+    },
+    fileFilter (req, file, cb) {
+        if (!file.originalname.match(/\.(jpg|jpeg|png)$/)){
+            return cb(new Error("Please upload an Image"))
+        }
+        cb(undefined, true)
+    }
+})
+router.post('/books/avatar/:id', authAdmin, upload.single('avatar'), async (req, res) => {
+    const book = await Book.findById(req.params.id)
+    const buffer = await sharp(req.file.buffer).resize({width:330, height: 500}).png().toBuffer()
+    book.avatar = buffer
+    await book.save()
+    res.send()
+}, (error, req, res, next) => {
+    res.status(400).send({error: error.message})
+})
+
+router.get('/books/avatar/:id', async (req, res) => {
+    try {
+        const book = await Book.findById(req.params.id)
+        if(!book || !book.avatar){
+           throw new Error()
+        }
+
+        res.set('Content-Type', 'image/png')
+        res.send(book.avatar)
+
+    }catch(err) {
+        res.status(404).send()
+    }
+})
 
 module.exports = router
