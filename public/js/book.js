@@ -161,6 +161,8 @@ newUser.addEventListener('submit', async (event) => {
         backgroundRemoveBlur()
         localStorage.setItem('token', user.token);
         loggedInMode(user.user.username)
+    } else {
+        alert("Please make sure you inserted your credentials correctly, password must be 8 characters long")
     }
 })
 const fetchNewUser = async (username, email, password) => {
